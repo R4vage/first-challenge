@@ -1,0 +1,21 @@
+
+
+:root {
+    --clr-main-dark: #002B5B;
+    --clr-main: #2B4865;
+    --clr-main-light: #256D85;
+    --clr-main-lighter: #8FE3CF;
+    --clr-black: #0f0f0f;
+    --clr-white: #fff;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
