@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="css/global.css">
 </head>
 <body>
+
     <header class="header">
         <div class="header__logo">
             <img src="assets/first-steps.png" alt="Challenge Logo">
@@ -28,8 +29,15 @@
     <main>
 
         
-        <div class="task-list" id="js-task-list">
+        <section class="task-list" id="js-task-list">
+
             <h2>Listado de gastos:</h2>
+            <div class="task-list__search">
+                	<img src="assets/search.svg" id="js-task-list__search__button">
+                    <input type="text" id="js-task-list__search__input" placeholder="Search tasks">
+            </div>
+
+            
             <table class="task-list__table" id="js-task-list__table">
                 <thead>
                     <tr class="task-list__row">
@@ -47,16 +55,16 @@
             </table>
 
 
-        </div>
+        </section>
 
 
         <button id="js-open-task-modal">Add Task</button>
-        <div id="js-task-modal" class="task-modal"> <!-- Que cubra toda la pantalla -->
+        <section id="js-task-modal" class="task-modal"> <!-- Que cubra toda la pantalla -->
             <div class="task-modal__content">
                 <h3>Add task</h1>
                 <img src="assets/cross.png" class="add-task__cross" id="js-close-task-modal">
                 <form class="add-task__form" id="js-add-task__form">
-                    <p>ID:</p>
+                    <p>ID: <input type="number" name="id" readonly class="add-task__form__id"></p>
                     <p>Name:<input type="text" placeholder="Please Input a Task" max="100" required name="name"></p>
                     <p>Asignee:
                         <select name="asignee" id="js-form__asignee">
@@ -75,11 +83,11 @@
                         <input type="radio" id="Pending" name="status" value="Pending" checked>
                         <label for="Pending">Pending</label><br>
                     </div>
-                    <input type="submit" value="Add Task" id="js-add-task"> 
+                    <input type="submit" value="Add Task" id="js-add-task" name="submit"> 
 
                 </form>
             </div>
-        </div>
+        </section>
         index
     </main>
 
