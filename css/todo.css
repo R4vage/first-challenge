@@ -68,21 +68,55 @@ main{
 
 .task-list{
     padding: 1em;
-    width: 80%;
+    width: 96%;
     background-color: var(--clr-main-light);
     border-radius: 15px;
-    margin: 1em;
+    margin-block: 1em;
     color: var(--clr-white);
+    overflow-x: scroll;
+    min-width: 10em;
+    
+}
+
+.task-list__filters{
+    margin: 1em;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
 }
 
 .task-list__search{
     display: flex;
     align-items: center;
     height: 2em;
-    margin: 1em;
     background-color: aliceblue;
 
     border-radius: 15px;
+}
+
+.task-list__filters__status{
+    display: flex;
+    align-items: center;
+    background-color: var(--clr-main);
+    border-radius: 15px;
+    padding-inline: 1em;
+    height: 2em;
+    gap: 1em;
+    width: 15em;
+}
+
+.task-list__filters__status__select{
+    all: unset;
+    width: 9em;
+    color: black;
+    border-radius: 15px;
+    overflow: hidden;
+    list-style-type: armenian;
+    background-color: aliceblue;
+    text-align: center;
+    font-size: medium;
+    height: 1.5em;
+    align-items: center;
 }
 
 .task-list__search img{
@@ -104,18 +138,32 @@ main{
     width: 100%;
     text-align: left;
     margin-top: 1em;
-    margin-inline:2em ;
+    min-width: max-content;
+    padding-left: 1em;
+
+}
+
+.task-list__row th{
+    margin-bottom: 2em;
+    align-items: center;
+    font-size: large;
+    justify-content: center;
+}
+
+.task-list__row th img{
+    width: 1em;
+    margin-bottom: -4px;
+    margin-left: 0.5em;
+    cursor: pointer;
 }
 
 .task-list__row{
     width: 100%;
-    padding: 1em;
-    vertical-align: middle;
     position: relative;
+    
 }
 
 .task-list__row td{
-    padding-bottom: 1em;
     vertical-align: middle;
     overflow: hidden;
     white-space: nowrap;
@@ -123,15 +171,26 @@ main{
     max-width: 4em;
 }
 
-.task-list__row img{
-    width: 1.5em;
-    cursor: pointer;
-    padding-bottom: 1em;
+.task-list__row__icons{
+    display: flex;
+    align-items: center;
+    margin-block: 0.6em;
+    gap: 1em;
+    margin-left: auto;   
 }
 
-.task-list__row img:last-of-type{
-  margin-left: 1em;
+.task-list__row__icons img{
+    width: 1.5em;
+    right: 0;
+    cursor: pointer;
 }
+
+.task-list__row__icons img:first-of-type{
+    margin-left: auto;
+    right: 0;
+}
+
+
 
 /* @media (min-width:769px) {
     .task-modal__content{
@@ -140,6 +199,15 @@ main{
 } */
 
 @media (min-width:768px){
+    .task-list{
+        overflow-x: unset ;
+    }
+
+    .task-list__filters{
+        flex-direction: row;
+        align-items: center;
+    }
+    
     .task-list__search{
         width: 50%;
     }
@@ -148,6 +216,10 @@ main{
 
 
 @media (min-width:1025px ){
+    .task-list{
+        width: 80%;
+    }
+
     .task-list__search{
         width: 40%;
     }

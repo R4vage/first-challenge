@@ -32,20 +32,29 @@
         <section class="task-list" id="js-task-list">
 
             <h2>Listado de gastos:</h2>
-            <div class="task-list__search">
-                	<img src="assets/search.svg" id="js-task-list__search__button">
-                    <input type="text" id="js-task-list__search__input" placeholder="Search tasks">
-            </div>
-
+            <menu class="task-list__filters">
+                <div class="task-list__search">
+                        <img src="assets/search.svg" id="js-task-list__search__button">
+                        <input type="text" id="js-task-list__search__input" placeholder="Search tasks">
+                </div>
+                <div class="task-list__filters__status">
+                    <p >Status: </p>
+                    <select class="task-list__filters__status__select" id="js-task-list__filters__status__select">
+                        <option selected>All</option>
+                        <option>Done</option>
+                        <option>Pending</option>
+                    </select>
+                </div>
+            </menu>
             
             <table class="task-list__table" id="js-task-list__table">
-                <thead>
+                <thead class="task-list__head">
                     <tr class="task-list__row">
-                        <th>ID</th>
-                        <th>Task</th>
-                        <th>Asignee</th>
+                        <th>ID <img src="assets/asc.svg" id="js-sortBy-id-asc"><img src="assets/desc.svg" id="js-sortBy-id-desc"></th>
+                        <th>Task <img src="assets/asc.svg" id="js-sortBy-name-asc"><img src="assets/desc.svg" id="js-sortBy-name-desc"></th>
+                        <th>Asignee </th>
                         <th>Status</th>
-                        <th>Time</th>
+                        <th>Time <img src="assets/asc.svg" id="js-sortBy-time-asc"><img src="assets/desc.svg" id="js-sortBy-time-desc"></th>
                     </tr>
                 </thead>
                 <tbody id="js-task-list__table__body">
