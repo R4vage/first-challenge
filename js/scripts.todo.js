@@ -5,6 +5,8 @@ const taskList = document.getElementById('js-task-list__table__body')
 const taskModal = document.getElementById('js-task-modal')
 const taskForm = document.getElementById('js-add-task__form')
 
+console.log(taskForm.elements['status'].value)
+
 /* Función para mostrar */
 
 

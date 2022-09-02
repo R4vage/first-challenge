@@ -75,6 +75,8 @@ main{
     color: var(--clr-white);
     overflow-x: scroll;
     min-width: 10em;
+    display: flex;
+    flex-direction: column;
     
 }
 
@@ -189,6 +191,31 @@ main{
     margin-left: auto;
     right: 0;
 }
+
+.task-list__add-task-button{
+    all: unset;
+    align-self: flex-end;
+    display: block;
+    width: 8em;
+    height: 2em;
+    background-color: var(--clr-main-lighter);
+    text-align: center;
+    border-radius: 15px;
+    color: var(--clr-black);
+    cursor: pointer;
+    margin-block: 1em;
+    margin-right: 2em;
+    border-radius: 15px 15px/ 15px 15px 100% 100% ;
+    box-shadow: 7px 7px rgba(0,0,0,.25);
+    transition: all 200ms ease-in-out;
+    text-transform: uppercase;
+}
+
+.task-list__add-task-button:hover{
+    transform: scale(1.1);
+    box-shadow: 10px 10px rgba(0,0,0,.15), inset 0 0 0px black;
+}
+
 
 
 

@@ -1,0 +1,56 @@
+main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.calculator {
+    padding: 1em;
+    width: 320px;
+    background-color: var(--clr-main-light);
+    border-radius: 15px;
+    margin-block: 1em;
+    color: var(--clr-white);
+    display: flex;
+    flex-direction: column;
+    background-color: var(--clr-main-lighter);
+    color: var(--clr-black);
+    font-size: large;
+}
+
+.calculator form{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    min-height: 10em;
+}
+
+
+
+.calculator form p{
+    display: flex;
+    align-items: center;
+    height: 2em;
+    justify-content: space-between;
+
+
+}
+
+.calculator form p input, .calculator__input-years input, .calculator__input-days input{
+    width: 15em;
+}
+
+.calculator__input-days, .calculator__input-years{
+    align-items: center;
+    height: 2em;
+    justify-content: space-between;
+}
+
+.calculator__input-years{
+    display: flex;
+}
+
+.calculator__input-days{
+    display: none;
+}
