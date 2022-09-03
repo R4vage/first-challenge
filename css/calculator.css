@@ -84,6 +84,7 @@ main{
     margin-top: -13.5em;
     transition: all 200ms ease-in-out;
     padding-top: 2em;
+    margin-bottom: 1em;
 }
 
 .results__form{
