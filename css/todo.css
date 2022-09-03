@@ -142,7 +142,21 @@ main{
     margin-top: 1em;
     min-width: max-content;
     padding-left: 1em;
+    background: var(--clr-main-dark);
+    border-radius: 15px;
+    padding: 1em;
+    border: 1px solid white;
+    
+    
+}
 
+
+.task-list__table thead th{
+
+    font-size: larger;
+    
+
+    
 }
 
 .task-list__row th{

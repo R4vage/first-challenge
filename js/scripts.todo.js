@@ -125,6 +125,8 @@ closeModalButton.onclick = function (){closeModal()}
 
 taskForm.addEventListener('submit', (event) => {
     event.preventDefault()
+    let searchValue = searchInput.value.toLowerCase()
+    let selectValue = statusSelect.value
 
     let date
     let task
@@ -149,12 +151,18 @@ taskForm.addEventListener('submit', (event) => {
         date = new Date().toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'})
         task = {id:id, name:name,asignee:asignee, status:status, time: date}
         tasks.push(task)
-        createNewRow(task) /* Lo agregamos también a la lista, para no tener que recargar la página */
+        if((selectValue === 'All' || selectValue === status) 
+        && (searchValue === '' || name.includes(searchValue))){
+            console.log(selectValue)
+            createNewRow(task)
+            currentlyShownTasks.push(task)
+        } /* Lo agregamos también a la lista, si cumple con los parametros de búsqueda, para no tener que recargar la página */
+        
     }
     sortBy('id', true)
     localStorage.setItem('tasks', JSON.stringify(tasks))    
     closeModal()
-    currentlyShownTasks = tasks
+    
 })
 
 /* SECCIÓN DE FILTROS */
@@ -167,12 +175,12 @@ const statusSelect = document.getElementById('js-task-list__filters__status__sel
 /* Sección para busqueda de tasks */
 
 function searchTasks (){
-    let searchValue = searchInput.value
+    let searchValue = searchInput.value.toLowerCase()
     let selectValue = statusSelect.value
     if( selectValue === 'All') {
-        currentlyShownTasks = tasks.filter(element => element.name.includes(searchValue))
+        currentlyShownTasks = tasks.filter(element => element.name.toLowerCase().includes(searchValue))
     } else {
-        currentlyShownTasks = tasks.filter(element => element.status === selectValue && element.name.includes(searchValue))
+        currentlyShownTasks = tasks.filter(element => element.status === selectValue && element.name.toLowerCase().includes(searchValue))
     }
     
     taskList.innerHTML=''
@@ -195,7 +203,7 @@ searchInput.addEventListener ( "keydown", function (e){
 
 statusSelect.onchange = function (){
     let selectValue = statusSelect.value
-    let searchValue = searchInput.value
+    let searchValue = searchInput.value.toLowerCase()
     if (searchInput.value === '') {
         if (selectValue === 'All') {
             currentlyShownTasks = tasks
@@ -204,9 +212,9 @@ statusSelect.onchange = function (){
         }
     } else {
         if (selectValue === 'All') {
-            currentlyShownTasks = tasks.filter(element => element.name.includes(searchValue))
+            currentlyShownTasks = tasks.filter(element => element.name.toLowerCase().includes(searchValue))
         } else {
-            currentlyShownTasks = tasks.filter(element => element.status === selectValue && element.name.includes(searchValue))
+            currentlyShownTasks = tasks.filter(element => element.status === selectValue && element.name.toLowerCase().includes(searchValue))
         }
     }
     taskList.innerHTML = ''
@@ -286,5 +294,3 @@ sortByIdAscButton.onclick= function(){
 sortByIdDescButton.onclick = function(){
     sortBy('id', false)
 }
-
-console.log(tasks)
