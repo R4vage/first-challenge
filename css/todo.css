@@ -124,6 +124,7 @@ main{
     display: flex;
     flex-direction: column;
     gap: 1em;
+    position: relative;
 }
 
 .task-list__search{
@@ -172,6 +173,10 @@ main{
     cursor: pointer;
     transition: all 200ms ease-in-out;
     display: none;
+    width: fit-content;
+    position: absolute;
+    right: 0;
+    top: 2px;
 }
 
 
@@ -329,6 +334,10 @@ main{
         align-items: center;
     }
     
+    .task-list__filters__cross{
+        position: relative;
+        top: 0;
+    }
     .task-list__search{
         width: 50%;
     }

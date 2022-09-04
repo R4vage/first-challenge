@@ -9,7 +9,6 @@ const radioDays = document.getElementById('js-less-than-a-year-radio')
 const radioYears = document.getElementById('js-more-than-a-year-radio')
 const inputYears = document.getElementById('js-calculator__input-years')
 const inputDays = document.getElementById('js-calculator__input-days')
-console.log(inputYears.children['years'])
 
 radioYears.onclick = function (){
     inputYears.style.display = 'flex'
@@ -68,7 +67,6 @@ function calculateBonus(){
 
 calculatorForm.onsubmit = function (event){
     event.preventDefault()
-    console.log(calculateSalaryPerDay())
     showResults()
     resultsForm.elements['salary-per-day'].value = calculateSalaryPerDay().toFixed(2)
     resultsForm.elements['salary-per-year'].value = calculateSalaryPerYear().toFixed(2)
