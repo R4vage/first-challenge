@@ -8,6 +8,7 @@ const taskForm = document.getElementById('js-add-task__form')
 const tableWarning = document.getElementById('js-task-list__warning')
 const tableNoResults = document.getElementById('js-task-list__warning--no-results')
 
+
 /* Funciones para abrir y cerrar el modal para agregar/modificar gastos */
 
 function closeModal(){taskModal.style.display = 'none'}
@@ -50,6 +51,8 @@ function createNewRow(task) {
         newTr.remove()
         if (tasks.length === 0){
             tableWarning.style.display = 'block'
+        } else if (taskList.childElementCount === 0){
+            tableNoResults.style.display = 'block'
         }
     }
 
@@ -279,6 +282,10 @@ function cleanFilters(){
 clearFiltersButton.onclick = function(){ 
     cleanFilters()
     clearFiltersButton.style.display = 'none'
+    tableNoResults.style.display = 'none'
+    if(tasks.length <0){
+        
+    }
 }
 
 
