@@ -28,3 +28,25 @@ body{
     display: flex;
     flex-direction: column;
 }
+
+/* Ancho */
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Base */
+  ::-webkit-scrollbar-track {
+    top: -10px;
+    background: var(--clr-main-lighter);
+  }
+  
+  /* Scroll */
+  ::-webkit-scrollbar-thumb {
+    background: var(--clr-main);
+   
+  }
+  
+  /* Hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--clr-main-dark);
+  }

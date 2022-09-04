@@ -1,10 +1,12 @@
 /* Primer acceso a los tasks guardados en local storage */
-let tasks  /* En esta variable se storea la lista completa de tareas */
-let currentlyShownTasks /* Esta variable es para storear los tasks que el usuario está viendo */
+let tasks = []   /* En esta variable se storea la lista completa de tareas */
+let currentlyShownTasks = [] /* Esta variable es para storear los tasks que el usuario está viendo */
 let currentSortBy = ['id', true] /* Por defecto, la lista esta ordenada por id */
 const taskList = document.getElementById('js-task-list__table__body')
 const taskModal = document.getElementById('js-task-modal')
 const taskForm = document.getElementById('js-add-task__form')
+const tableWarning = document.getElementById('js-task-list__warning')
+const tableNoResults = document.getElementById('js-task-list__warning--no-results')
 
 /* Funciones para abrir y cerrar el modal para agregar/modificar gastos */
 
@@ -43,9 +45,12 @@ function createNewRow(task) {
     newImg.onclick = function (){
         removedTaskIndex = tasks.findIndex(element => element.id === task.id)
         tasks.splice(removedTaskIndex, 1)
-        sortBy('id', true)
+        sortBy('id', true, tasks)
         localStorage.setItem('tasks', JSON.stringify(tasks))
         newTr.remove()
+        if (tasks.length === 0){
+            tableWarning.style.display = 'block'
+        }
     }
 
     newDiv.appendChild(newImg)
@@ -83,12 +88,11 @@ function replaceTaskList (tasks){
 
 /* Primer seteo de tasks. Checkeamos si hay tareas guardadas en la localStorage */
 
-if(localStorage.getItem('tasks')){
+if(JSON.parse(localStorage.getItem('tasks'))){
     tasks = JSON.parse(localStorage.getItem('tasks'))
     replaceTaskList(tasks)
     currentlyShownTasks = tasks
-} else {
-    tasks = []
+    tableWarning.style.display = 'none'
 }
 
 
@@ -130,7 +134,6 @@ taskForm.addEventListener('submit', (event) => {
     event.preventDefault()
     let searchValue = searchInput.value.toLowerCase()
     let selectValue = statusSelect.value
-
     let date
     let task
     let name = taskForm.elements['name'].value
@@ -139,11 +142,8 @@ taskForm.addEventListener('submit', (event) => {
     let id = taskForm.elements['id'].value
 
     taskIndex = tasks.findIndex(task => task.id === id)
-    console.log(taskIndex)
-
     /* Este submit es para el caso en que se este modificando una tarea que ya existe */
     if (taskIndex !== -1){
-        console.log('here', name, asignee, status, id)
         date = tasks[taskIndex].time
         task = {id:id, name:name,asignee:asignee, status:status, time: date}
         tasks[taskIndex] =  task
@@ -151,7 +151,7 @@ taskForm.addEventListener('submit', (event) => {
         listTask.childNodes[1].innerText = name
         listTask.childNodes[2].innerText = asignee
         listTask.childNodes[3].innerText = status
-        console.log(listTask.childNodes[1].innerText)
+   
         /* Aca me aseguro de mostrar el task en la lista solo si esta dentro de las opciones de filtro, y ordeno la lista si hace falta */
         if((selectValue === 'All' || selectValue === status) 
         && (searchValue === '' || name.toLowerCase().includes(searchValue))){
@@ -167,23 +167,22 @@ taskForm.addEventListener('submit', (event) => {
             /* Si el task modificado no entra dentro de las opciones de filtrado, debemos removerlo de la lista */
             listTask.remove()
         }
-        
-
-
     } else {
     /* Este submit es cuando el usuario desea agregar una tarea nueva */
+
         date = new Date().toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'})
         task = {id:id, name:name,asignee:asignee, status:status, time: date}
         tasks.push(task)
         if((selectValue === 'All' || selectValue === status) 
         && (searchValue === '' || name.toLowerCase().includes(searchValue))){
             createNewRow(task)
-            currentlyShownTasks.push(task)
         } /* Lo agregamos también a la lista, si cumple con los parametros de búsqueda, para no tener que recargar la página */
         
     }
+    tableWarning.style.display = 'none'
     sortBy('id', true, tasks)
     localStorage.setItem('tasks', JSON.stringify(tasks))    
+
     closeModal()
     
 })
@@ -193,6 +192,7 @@ taskForm.addEventListener('submit', (event) => {
 const searchInput = document.getElementById('js-task-list__search__input')
 const searchButton = document.getElementById('js-task-list__search__button')
 const statusSelect = document.getElementById('js-task-list__filters__status__select')
+const clearFiltersButton = document.getElementById('js-task-list__filters__cross')
 
 
 /* Sección para busqueda de tasks */
@@ -201,11 +201,25 @@ function searchTasks (){
     let searchValue = searchInput.value.toLowerCase()
     let selectValue = statusSelect.value
     if( selectValue === 'All') {
-        currentlyShownTasks = tasks.filter(element => element.name.toLowerCase().includes(searchValue))
+        if(searchValue === '') {
+            clearFiltersButton.style.display = 'none'
+        } else {
+            currentlyShownTasks = tasks.filter(element => element.name.toLowerCase().includes(searchValue))
+            clearFiltersButton.style.display = 'block'
+        }
+        
     } else {
+        clearFiltersButton.style.display = 'block'
         currentlyShownTasks = tasks.filter(element => element.status === selectValue && element.name.toLowerCase().includes(searchValue))
     }
-    replaceTaskList(currentlyShownTasks)
+    if (currentlyShownTasks.length === 0 ){
+        clearFiltersButton.style.display = 'block'
+        tableNoResults.style.display = 'block'
+        replaceTaskList([])
+    } else {
+        tableNoResults.style.display = 'none'
+        replaceTaskList(currentlyShownTasks)
+    }
 }
 
 searchButton.onclick = function (){ searchTasks()}
@@ -223,21 +237,49 @@ searchInput.addEventListener ( "keydown", function (e){
 statusSelect.onchange = function (){
     let selectValue = statusSelect.value
     let searchValue = searchInput.value.toLowerCase()
-    if (searchInput.value === '') {
+    if (searchValue === '') {
         if (selectValue === 'All') {
             currentlyShownTasks = tasks
+            clearFiltersButton.style.display = 'none'
         } else {
             currentlyShownTasks = tasks.filter(element => element.status === selectValue)
+            clearFiltersButton.style.display = 'block'
         }
     } else {
+        clearFiltersButton.style.display = 'block'
         if (selectValue === 'All') {
             currentlyShownTasks = tasks.filter(element => element.name.toLowerCase().includes(searchValue))
         } else {
             currentlyShownTasks = tasks.filter(element => element.status === selectValue && element.name.toLowerCase().includes(searchValue))
         }
     }
-    replaceTaskList(currentlyShownTasks)
+    if (currentlyShownTasks.length === 0 ){
+        clearFiltersButton.style.display = 'block'
+        tableNoResults.style.display = 'block'
+        replaceTaskList([])
+    } else {
+        clearFiltersButton.style.display = 'block'
+        tableNoResults.style.display = 'none'
+        replaceTaskList(currentlyShownTasks)
+    }
+    
+    
 }
+
+/* Limpiar los filtros */
+
+function cleanFilters(){
+    currentSortBy = ['id', true]
+    searchInput.value = ''
+    statusSelect.value = 'All'
+    replaceTaskList(tasks)
+}
+
+clearFiltersButton.onclick = function(){ 
+    cleanFilters()
+    clearFiltersButton.style.display = 'none'
+}
+
 
 /* Funcionalidad de SortBy */
 const sortByButtons = document.querySelectorAll('.js-sortBy-buttons')
@@ -278,7 +320,7 @@ function sortBy (sorter, isAsc, toBeSorted){
 
 }
 
-/* Function for the buttons */
+/* Function para los botones de sortBy */
 function clickSortByButtons(elementId){
     let stringArray = elementId.split('-')
     let isAsc = stringArray[3] === 'true'
@@ -288,3 +330,4 @@ function clickSortByButtons(elementId){
 }
 
 sortByButtons.forEach(button => button.onclick = function (){clickSortByButtons(this.id)})
+

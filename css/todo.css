@@ -41,13 +41,7 @@ main{
     margin: 0.5em;
     cursor: pointer;
 }
-.add-task__form__id{
-    cursor: unset;
-    all: none;
-    background: transparent;
-    border: unset;
-    color: var(--clr-white);
-}
+
 
 .add-task__form p{
     display: flex;
@@ -56,8 +50,32 @@ main{
 }
 
 .add-task__form p input, .add-task__form p select{
-    width: 70%;
+    all: unset;
+    width: 65%;
+    border: none;
+    color: black;
+    margin-left: 0.5em;
+    border-radius: 10px;
+    background-color: var(--clr-white);
+    padding-inline: 1em;
+    font-size: medium;
+    height: 1.5em;    
+}
 
+.add-task__form__id{
+    cursor: unset;
+    all: none;
+    background: transparent!important;
+    border: unset;
+    color: var(--clr-white)!important;
+}
+
+.add-task__form p select {
+    list-style-type: armenian;
+    background-color: aliceblue;
+    text-align: center;
+    font-size: medium;
+    align-items: center;
 }
 
 .add-task__form{
@@ -68,6 +86,26 @@ main{
     
 }
 
+.task-modal__add-task{
+    all: unset;
+    display: block;
+    height: 2em;
+    text-align: center;
+    border-radius: 15px;
+    border-radius: 15px 15px/ 15px 15px 100% 100% ;
+    transition: all 200ms ease-in-out;
+    text-transform: uppercase;
+    background-color: var(--clr-main-lighter);
+    color: var(--clr-black);
+    cursor: pointer;
+    box-shadow: inset 0px 0px rgba(0,0,0,.25), 6px 6px rgba(0,0,0,.25);
+    margin-bottom: 1em;
+}
+
+.task-modal__add-task:hover{
+    transform: scale(1.02);
+}
+
 .task-list{
     padding: 1em;
     width: 96%;
@@ -75,7 +113,6 @@ main{
     border-radius: 15px;
     margin-block: 1em;
     color: var(--clr-white);
-    overflow-x: scroll;
     min-width: 10em;
     display: flex;
     flex-direction: column;
@@ -107,7 +144,7 @@ main{
     height: 2em;
     gap: 1em;
     width: 15em;
-    cursor: pointer;
+
 }
 
 .task-list__filters__status__select{
@@ -122,7 +159,22 @@ main{
     font-size: medium;
     height: 1.5em;
     align-items: center;
+    cursor: pointer;
 }
+
+.task-list__filters__cross{
+    background-color: white;
+    color: black;
+    padding-inline: 0.5em;
+    padding-block: 0.3em;
+    border-radius: 1000px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    cursor: pointer;
+    transition: all 200ms ease-in-out;
+    display: none;
+}
+
+
 
 .task-list__search img{
     cursor: pointer;
@@ -138,6 +190,12 @@ main{
 
 }
 
+.table-wrapper{
+    overflow-x: scroll;
+
+    position: relative;
+    overflow-y: hidden;
+}
 
 .task-list__table{
     width: 100%;
@@ -149,13 +207,15 @@ main{
     border-radius: 15px;
     padding: 1em;
     border: 1px solid white;
-    
+    overflow: hidden;
     
 }
 
 
 .task-list__table thead th{
     font-size: larger;
+    border-left: 2px groove white;
+    padding-inline: 5px;
 }
 
 .task-list__row th{
@@ -163,6 +223,7 @@ main{
     align-items: center;
     font-size: large;
     justify-content: center;
+    cursor: default;
 }
 
 .task-list__row th img{
@@ -170,6 +231,10 @@ main{
     margin-bottom: -4px;
     margin-left: 0.5em;
     cursor: pointer;
+}
+
+.task-list__row th img:hover{
+    transform: scale(1.05);
 }
 
 .task-list__row{
@@ -236,6 +301,12 @@ main{
     box-shadow: 10px 10px rgba(0,0,0,.15), inset 0 0 0px black;
 }
 
+.task-list__warning{
+    text-align: right;
+    margin-top: 0.5em;
+    margin-right: 1em;
+    display: none;
+}
 
 
 
@@ -247,6 +318,9 @@ main{
 
 @media (min-width:768px){
     .task-list{
+        overflow-x: unset ;
+    }
+    .table-wrapper{
         overflow-x: unset ;
     }
 

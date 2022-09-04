@@ -113,7 +113,7 @@ main{
 }
 
 
-.calculator form p input, .calculator__input-years input, .calculator__input-days input{
+.calculator form p input, .calculator__input-years input, .calculator__input-days input, .results__form p input{
     all: unset;
     width: 90%;
     border: none;
@@ -128,4 +128,10 @@ main{
 
 @media (min-width:768px){
 
+}
+
+.results__form p input{
+    width: 50%;
+    color: black;
+    text-align: right;
 }

@@ -45,36 +45,40 @@
                         <option>Pending</option>
                     </select>
                 </div>
+                <p class="task-list__filters__cross" id="js-task-list__filters__cross">X</p>
             </menu>
-            
-            <table class="task-list__table" id="js-task-list__table">
-                
-                <thead class="task-list__head">
-                    <tr class="task-list__row">
-                        <th>ID 
-                            <img src="assets/desc.svg" id="js-sortBy-id-true" class="js-sortBy-buttons">
-                            <img src="assets/asc.svg" id="js-sortBy-id-false" class="js-sortBy-buttons">
-                        </th>
-                        <th>Task 
-                            <img src="assets/desc.svg" id="js-sortBy-name-true" class="js-sortBy-buttons">
-                            <img src="assets/asc.svg" id="js-sortBy-name-false" class="js-sortBy-buttons">
-                        </th>
-                        <th>Asignee </th>
-                        <th>Status</th>
-                        <th>Time 
-                            <img src="assets/desc.svg" id="js-sortBy-time-true" class="js-sortBy-buttons">
-                            <img src="assets/asc.svg" id="js-sortBy-time-false" class="js-sortBy-buttons">
-                        </th>
-                    </tr>
+            <div class="table-wrapper">
+                <table class="task-list__table" id="js-task-list__table">
                     
-                </thead>
-                
-                <tbody id="js-task-list__table__body">
+                    <thead class="task-list__head">
+                        <tr class="task-list__row">
+                            <th>ID 
+                                <img src="assets/desc.svg" id="js-sortBy-id-true" class="js-sortBy-buttons">
+                                <img src="assets/asc.svg" id="js-sortBy-id-false" class="js-sortBy-buttons">
+                            </th>
+                            <th>Task 
+                                <img src="assets/desc.svg" id="js-sortBy-name-true" class="js-sortBy-buttons">
+                                <img src="assets/asc.svg" id="js-sortBy-name-false" class="js-sortBy-buttons">
+                            </th>
+                            <th>Asignee </th>
+                            <th>Status</th>
+                            <th>Time 
+                                <img src="assets/desc.svg" id="js-sortBy-time-true" class="js-sortBy-buttons">
+                                <img src="assets/asc.svg" id="js-sortBy-time-false" class="js-sortBy-buttons">
+                            </th>
+                        </tr>
+                        
+                    </thead>
                     
-                </tbody>
+                    <tbody id="js-task-list__table__body">
+                        
+                    </tbody>
+                    
+                </table>
                 
-            </table>
-
+            </div>
+            <p class="task-list__warning" id="js-task-list__warning">Currently there are no tasks. Use the button below to add tasks</p>
+            <p class="task-list__warning" id="js-task-list__warning--no-results">Your search didn't return any results</p>
             <button id="js-open-task-modal" class="task-list__add-task-button">Add Task</button>
         </section>
 
@@ -104,7 +108,7 @@
                         <input type="radio" id="Pending" name="status" value="Pending" checked>
                         <label for="Pending">Pending</label><br>
                     </div>
-                    <input type="submit" value="Add Task" id="js-add-task" name="submit"> 
+                    <input type="submit" value="Add Task" id="js-add-task" name="submit" class="task-modal__add-task"> 
 
                 </form>
             </div>
@@ -112,11 +116,11 @@
     </main>
     
     <footer>
-        <a href="https://applaudostudios.com" target="_blank"><img src="assets/applaudo.png"></a>
         <div>
-            <p>Primer Challenge Applaudo Studios Trainee Program</p>
-            <p>Desarrollado por Julian Marc</p>
+            <p>First Challenge Applaudo Studios Trainee Program</p>
+            <p>Developed By Julian Marc</p>
         </div>
+        <a href="https://applaudostudios.com" target="_blank"><img src="assets/applaudo.png"></a>
         <a href="https://github.com/R4vage" target="_blank"> <img src="assets/gitHub.png" class="github-icon"></a>
         <a href="www.linkedin.com/in/julianmarc" target="_blank"><img src="assets/linkedIn.png" class="linkedIn-icon"></a>
 
