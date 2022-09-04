@@ -15,6 +15,11 @@ footer {
 footer img {
     width: 4em;
     cursor: pointer;
+    transition: all 200ms ease-in-out;
+}
+
+footer img:hover {
+    transform: scale(1.1);
 }
 
 footer p {

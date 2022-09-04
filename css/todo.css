@@ -3,6 +3,8 @@ main{
     flex-direction: column;
     align-items: center;
     max-width: 100%;
+    margin-top: 3.5em;
+    margin-bottom: 1em;
 }
 .task-modal{
     position: fixed;
@@ -105,6 +107,7 @@ main{
     height: 2em;
     gap: 1em;
     width: 15em;
+    cursor: pointer;
 }
 
 .task-list__filters__status__select{
@@ -152,11 +155,7 @@ main{
 
 
 .task-list__table thead th{
-
     font-size: larger;
-    
-
-    
 }
 
 .task-list__row th{
@@ -193,12 +192,19 @@ main{
     margin-block: 0.6em;
     gap: 1em;
     margin-left: auto;   
+    filter: drop-shadow(5px 5px 5px rgba(255, 255, 255, 0.357));
 }
+
+
 
 .task-list__row__icons img{
     width: 1.5em;
     right: 0;
     cursor: pointer;
+}
+
+.task-list__row__icons img:hover{
+    transform: scale(1.1);
 }
 
 .task-list__row__icons img:first-of-type{

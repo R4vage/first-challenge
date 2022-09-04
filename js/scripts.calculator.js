@@ -74,6 +74,15 @@ calculatorForm.onsubmit = function (event){
     resultsForm.elements['salary-per-year'].value = calculateSalaryPerYear().toFixed(2)
     resultsForm.elements['total-income'].value = calculateTotalIncome().toFixed(2)
     resultsForm.elements['bonus'].value = calculateBonus().toFixed(2)
+    calculatorSubmit.disabled= true
+    calculatorSubmit.classList.remove('calculator__submit-active')
+    calculatorSubmit.classList.add('calculator__submit-disabled')
+    setTimeout(()=>{
+        calculatorSubmit.disabled = false;
+        calculatorSubmit.classList.remove('calculator__submit-disabled')
+        calculatorSubmit.classList.add('calculator__submit-active')
+        }
+        ,3500)
 }
     
 

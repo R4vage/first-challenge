@@ -31,18 +31,20 @@
             <form id="js-calculator__form">
                 <p>Salary: <input type="number" min="1" required name="salary" placeholder="Input salary per month" id="js-calculator__input-salary" step="0.01"></p>
                 <p>Worked less than a year? : </p>
+
                 <div>
                     <input type="radio" id="js-less-than-a-year-radio" name="year-days" value="yes"> 
                     <label for="yes">Yes</label>
                     <input type="radio" id="js-more-than-a-year-radio" name="year-days" value="no" checked>
                     <label for="no">No</label><br>
                 </div>
+
                 <div id="js-calculator__input-years" class="calculator__input-years">Years: <input type="number" min="1" max="35" step="1" name="years" placeholder="Input years of employment" required></div>
                 <div id="js-calculator__input-days" class="calculator__input-days">Days: <input type="number" min="1" max="365" step="1" name="days" placeholder="Input days of employment"></div>
-                
-                <input type="submit" value="Calculate" id="js-calculator__submit" class="calculator__submit">
+                <input type="submit" value="Calculate" id="js-calculator__submit" class="calculator__submit calculator__submit-active">
             </form>
         </section>
+
         <section class="results" id="js-results">
             <form class="results__form" id="js-results__form">
                 <p>Salary per day: <input type="number" readonly name="salary-per-day"></p>
@@ -50,11 +52,7 @@
                 <p>Total Income: <input type="number" readonly name="total-income"></p>
                 <p>Bonus: <input type="number" readonly name="bonus"></p>
             </form>
-
         </section>
-
-
-
     </main>
 
     <footer>
@@ -65,7 +63,6 @@
         </div>
         <a href="https://github.com/R4vage" target="_blank"> <img src="assets/gitHub.png" class="github-icon"></a>
         <a href="www.linkedin.com/in/julianmarc" target="_blank"><img src="assets/linkedIn.png" class="linkedIn-icon"></a>
-
     </footer>
 
     <script src="js/scripts.calculator.js" ></script>

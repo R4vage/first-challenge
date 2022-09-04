@@ -1,15 +1,10 @@
 /* Primer acceso a los tasks guardados en local storage */
 let tasks  /* En esta variable se storea la lista completa de tareas */
 let currentlyShownTasks /* Esta variable es para storear los tasks que el usuario está viendo */
+let currentSortBy = ['id', true] /* Por defecto, la lista esta ordenada por id */
 const taskList = document.getElementById('js-task-list__table__body')
 const taskModal = document.getElementById('js-task-modal')
 const taskForm = document.getElementById('js-add-task__form')
-
-console.log(taskForm.elements['status'].value)
-
-/* Función para mostrar */
-
-
 
 /* Funciones para abrir y cerrar el modal para agregar/modificar gastos */
 
@@ -76,13 +71,21 @@ function createNewRow(task) {
     taskList.appendChild(newTr)
 }
 
+/* Función para mapear un array y remplazar la lista actual */
 
-
-if(localStorage.getItem('tasks')){
-    tasks = JSON.parse(localStorage.getItem('tasks'))
+function replaceTaskList (tasks){
+    taskList.innerHTML = ''
     tasks.forEach(task => {
         createNewRow(task);
     });
+}
+
+
+/* Primer seteo de tasks. Checkeamos si hay tareas guardadas en la localStorage */
+
+if(localStorage.getItem('tasks')){
+    tasks = JSON.parse(localStorage.getItem('tasks'))
+    replaceTaskList(tasks)
     currentlyShownTasks = tasks
 } else {
     tasks = []
@@ -136,30 +139,50 @@ taskForm.addEventListener('submit', (event) => {
     let id = taskForm.elements['id'].value
 
     taskIndex = tasks.findIndex(task => task.id === id)
+    console.log(taskIndex)
 
     /* Este submit es para el caso en que se este modificando una tarea que ya existe */
     if (taskIndex !== -1){
+        console.log('here', name, asignee, status, id)
         date = tasks[taskIndex].time
         task = {id:id, name:name,asignee:asignee, status:status, time: date}
         tasks[taskIndex] =  task
-        listTask = document.getElementById(`js-task-row-${task.id}`).childNodes
-        listTask[1].innerText = name
-        listTask[2].innerText = asignee
-        listTask[3].innerText = status
+        listTask = document.getElementById(`js-task-row-${task.id}`)
+        listTask.childNodes[1].innerText = name
+        listTask.childNodes[2].innerText = asignee
+        listTask.childNodes[3].innerText = status
+        console.log(listTask.childNodes[1].innerText)
+        /* Aca me aseguro de mostrar el task en la lista solo si esta dentro de las opciones de filtro, y ordeno la lista si hace falta */
+        if((selectValue === 'All' || selectValue === status) 
+        && (searchValue === '' || name.toLowerCase().includes(searchValue))){
+            /* Si hubo cambio de nombre, y el currentSortBy esta realizado por nombre, hay que sortear la lista nuevamente */
+           
+            if(currentSortBy[0]==='name'){
+                currentlyShownIndex = currentlyShownTasks.findIndex(task => task.id === id)
+                currentlyShownTasks[currentlyShownIndex] = task
+                sortBy(currentSortBy[0],currentSortBy[1], currentlyShownTasks)
+                replaceTaskList(currentlyShownTasks)
+            }
+        } else {
+            /* Si el task modificado no entra dentro de las opciones de filtrado, debemos removerlo de la lista */
+            listTask.remove()
+        }
+        
+
+
     } else {
     /* Este submit es cuando el usuario desea agregar una tarea nueva */
         date = new Date().toLocaleString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'})
         task = {id:id, name:name,asignee:asignee, status:status, time: date}
         tasks.push(task)
         if((selectValue === 'All' || selectValue === status) 
-        && (searchValue === '' || name.includes(searchValue))){
-            console.log(selectValue)
+        && (searchValue === '' || name.toLowerCase().includes(searchValue))){
             createNewRow(task)
             currentlyShownTasks.push(task)
         } /* Lo agregamos también a la lista, si cumple con los parametros de búsqueda, para no tener que recargar la página */
         
     }
-    sortBy('id', true)
+    sortBy('id', true, tasks)
     localStorage.setItem('tasks', JSON.stringify(tasks))    
     closeModal()
     
@@ -182,11 +205,7 @@ function searchTasks (){
     } else {
         currentlyShownTasks = tasks.filter(element => element.status === selectValue && element.name.toLowerCase().includes(searchValue))
     }
-    
-    taskList.innerHTML=''
-    currentlyShownTasks.forEach(task => {
-        createNewRow(task);
-    });
+    replaceTaskList(currentlyShownTasks)
 }
 
 searchButton.onclick = function (){ searchTasks()}
@@ -217,24 +236,15 @@ statusSelect.onchange = function (){
             currentlyShownTasks = tasks.filter(element => element.status === selectValue && element.name.toLowerCase().includes(searchValue))
         }
     }
-    taskList.innerHTML = ''
-    currentlyShownTasks.forEach(task => {
-        createNewRow(task);
-    });
+    replaceTaskList(currentlyShownTasks)
 }
 
 /* Funcionalidad de SortBy */
+const sortByButtons = document.querySelectorAll('.js-sortBy-buttons')
 
-const sortByNameAscButton = document.getElementById('js-sortBy-name-asc')
-const sortByNameDescButton = document.getElementById('js-sortBy-name-desc')
-const sortByTimeAscButton = document.getElementById('js-sortBy-time-asc')
-const sortByTimeDescButton = document.getElementById('js-sortBy-time-desc')
-const sortByIdAscButton = document.getElementById('js-sortBy-id-asc')
-const sortByIdDescButton = document.getElementById('js-sortBy-id-desc')
+function sortBy (sorter, isAsc, toBeSorted){
 
-function sortBy (sorter, isAsc){
-
-    currentlyShownTasks.sort((a,b) => {
+    toBeSorted.sort((a,b) => {
         let varA
         let varB
         if (sorter === 'name'){    
@@ -265,32 +275,16 @@ function sortBy (sorter, isAsc){
         return 0
     })
 
-    taskList.innerHTML = ''
-    currentlyShownTasks.forEach(task => {
-        createNewRow(task);
-    });
+
 }
 
-sortByNameAscButton.onclick= function(){
-    sortBy('name', true)
+/* Function for the buttons */
+function clickSortByButtons(elementId){
+    let stringArray = elementId.split('-')
+    let isAsc = stringArray[3] === 'true'
+    sortBy(stringArray[2], isAsc, currentlyShownTasks)    
+    currentSortBy = [stringArray[2], isAsc]
+    replaceTaskList(currentlyShownTasks)
 }
 
-sortByNameDescButton.onclick = function(){
-    sortBy('name', false)
-}
-
-sortByTimeAscButton.onclick= function(){
-    sortBy('time', true)
-}
-
-sortByTimeDescButton.onclick = function(){
-    sortBy('time', false)
-}
-
-sortByIdAscButton.onclick= function(){
-    sortBy('id', true)
-}
-
-sortByIdDescButton.onclick = function(){
-    sortBy('id', false)
-}
+sortByButtons.forEach(button => button.onclick = function (){clickSortByButtons(this.id)})
