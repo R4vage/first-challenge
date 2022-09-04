@@ -176,6 +176,7 @@ taskForm.addEventListener('submit', (event) => {
         if((selectValue === 'All' || selectValue === status) 
         && (searchValue === '' || name.toLowerCase().includes(searchValue))){
             createNewRow(task)
+            tableNoResults.style.display = 'none'
         } /* Lo agregamos también a la lista, si cumple con los parametros de búsqueda, para no tener que recargar la página */
         
     }
